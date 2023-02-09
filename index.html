@@ -9,7 +9,48 @@
       @media only screen and (min-width: 640px) {
         html { scroll-padding-top: 5rem; }
       }
+
+      div.reallycollapsed {
+        display: none;
+      }
     </style>
+    <script type="text/javascript">
+      const findParentWithIdPrefix = (maybeChild, idPrefix) => {
+        while (maybeChild) {
+          if (maybeChild.getAttribute('id')?.startsWith(idPrefix)) {
+            return maybeChild
+          } else {
+            maybeChild = maybeChild.parentElement;
+          }
+        }
+
+        return null;
+      };
+
+      window.addEventListener('click', (e) => {
+        const triggerPrefix = 'collapse-trigger-';
+        const elemPrefix = 'bio-';
+
+        const target = e.target;
+        const foundTarget = findParentWithIdPrefix(target, triggerPrefix);
+        if (!foundTarget) {
+          return
+        }
+
+        const targetId = foundTarget.getAttribute('id');
+        console.log('click', targetId);
+
+        if (targetId?.startsWith(triggerPrefix)) {
+          const name = targetId.substring(triggerPrefix.length);
+          const toggleCollapseId = elemPrefix + name;
+          let elem = document.getElementById(toggleCollapseId);
+
+          console.log('click', elem);
+
+          elem.classList.toggle("reallycollapsed");
+        }
+      })
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
   </head>
   <body>
@@ -61,41 +102,37 @@
       <h2 id="speakers" class="text-2xl mt-4 mb-4">Speakers (tentative)</h2>
   
       <p class="mt-4 mb-4">
-        We have the following great people:
+        We are happy to have the following great people:
         <div class="mt-4">
-          <a href="#" class="m-2 flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100">
-            <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src="person.jpg" alt="">
+          <a  id="collapse-trigger-schirp" class="m-2 flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row hover:bg-gray-100">
+            <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-64 md:rounded-none md:rounded-l-lg" src="https://i1.rgstatic.net/ii/profile.image/380499336941569-1467729519227_Q512/Arne-Schirp.jpg" alt="">
             <div class="flex flex-col justify-between p-4 leading-normal">
                 <h5 class="mb-2 text-xl tracking-tight text-gray-900">
-                  A Person's Name
+                  Dr. Arne Schirp <span class="text-gray-600 ml-3">Fraunhofer WKI</span>
                 </h5>
                 <p class="mb-3 font-normal text-gray-600">
-                  What they are working on
                 </p>
             </div>
           </a>
-          <a href="#" class="m-2 flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100">
-            <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src="person.jpg" alt="">
+
+            <div class="flex flex-col m-8 ml-48 reallycollapsed" id="bio-schirp">
+            </div>
+
+          <a class="m-2 flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:min-w-l hover:bg-gray-100" id="collapse-trigger-kariz">
+            <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-64 md:rounded-none md:rounded-l-lg" src="https://www.bf.uni-lj.si/img/2022032221061165/mid/_DSC0580b.jpg" alt="">
             <div class="flex flex-col justify-between p-4 leading-normal">
                 <h5 class="mb-2 text-xl tracking-tight text-gray-900">
-                  A Person's Name
+                  Mirko Kariž, PhD <span class="text-gray-600 ml-3">Univerza v Ljubiljani, Biotehniška fakulteta</span>
                 </h5>
                 <p class="mb-3 font-normal text-gray-600">
-                  What they are working on
+                  Mirko's main research topics are related with wood adhesives, wood bonding, curing of adhesives, wood constructions.
                 </p>
             </div>
           </a>
-          <a href="#" class="m-2 flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100">
-            <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-l-lg" src="person.jpg" alt="">
-            <div class="flex flex-col justify-between p-4 leading-normal">
-                <h5 class="mb-2 text-xl tracking-tight text-gray-900">
-                  A Person's Name
-                </h5>
-                <p class="mb-3 font-normal text-gray-600">
-                  What they are working on
-                </p>
+
+            <div class="flex flex-col m-8 ml-48 reallycollapsed" id="bio-kariz">
             </div>
-          </a>
+
         </div>
       </p>
 
